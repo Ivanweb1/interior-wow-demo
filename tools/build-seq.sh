@@ -3,7 +3,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"; mkdir -p "$ROOT/assets/seq"
 ffmpeg -y -i "$ROOT/frames/0-empty.png" -vf "scale=1920:-2:flags=lanczos" -c:v libwebp -quality 86 "$ROOT/assets/poster-0.webp"
 ffmpeg -y -i "$ROOT/frames/1-final.png" -vf "scale=1920:-2:flags=lanczos" -c:v libwebp -quality 86 "$ROOT/assets/poster-1.webp"
-VIDEO=$(find "$ROOT/video" -maxdepth 1 -name '1-*.mp4' -print -quit)
+ffmpeg -y -i "$ROOT/frames/2-evening.png" -vf "scale=1920:-2:flags=lanczos" -c:v libwebp -quality 86 "$ROOT/assets/poster-2.webp"
+VIDEO=$(find "$ROOT/video" -maxdepth 1 -name '1-final-to-evening.mp4' -print -quit)
 if [ -n "${VIDEO:-}" ]; then
   rm -f "$ROOT/assets/seq/"*.webp
   ffmpeg -y -i "$VIDEO" -vf "scale=1600:-2:flags=lanczos" -c:v libwebp -quality 82 "$ROOT/assets/seq/%04d.webp"
