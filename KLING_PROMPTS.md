@@ -1,30 +1,29 @@
-# Ролик для «ОБЪЁМ»: одно видео на весь экран
+# Ролик для «ОБЪЁМ»: одно видео — кульминация
 
-Все сцены делает **одно видео**: «пустая бетонная коробка → готовый интерьер». Оно строится от первого кадра к последнему (start frame → tail frame). На сайте ползунок прокручивает это видео по кадрам.
-
-Опорные кадры генерирует Codex (шаг 1 в `CODEX_PROMPT.md`) и кладёт в `frames/`. Потом Claude запускает Kling.
+**Обновлено 12.11 (раунд 1).** Видео больше не показывает «бетон → интерьер». Это превращение теперь делает «волшебная кисть» на двух готовых кадрах (`0-empty` и `1-final`), без видео. Видео — **финальная кульминация**: готовая комната оживает, камера медленно наезжает, день сменяется тёплым вечером, загораются светильники. После него появляются метки с ценами.
 
 **Расход Kling: 1 видео, ~30 кредитов (kling-video-v3_0, first+tail frame, 720p, 5 с, без звука). Запускать только после «да» Ивана.**
 
 ## Опорные кадры (`frames/`, 16:9, 1920×1080)
 
-Главное условие: **камера, стены, окна и перспектива на двух кадрах совпадают до пикселя**. Поэтому сначала генерируется готовый интерьер, а пустой кадр делается редактированием готового, а не отдельной генерацией.
+| Файл | Что | Как |
+|---|---|---|
+| `0-empty.png` | пустая бетонная коробка | уже есть, не трогать |
+| `1-final.png` | готовый интерьер, дневной свет | уже есть, не трогать. **Это первый кадр видео** |
+| `2-evening.png` | тот же интерьер вечером, камера ближе | Codex делает в два шага (ниже). **Это последний кадр видео** |
 
-Общий стиль (дописывать в конец):
-> architectural interior photography, eye-level wide shot from the room entrance, static tripod camera, 24mm lens, two large floor-to-ceiling windows on the left wall, soft daylight, photorealistic, 16:9, no people, no text, no logos
+**`2-evening.png`, шаг 1, редактирование `1-final.png`:**
+> Same room, same camera, same furniture and geometry. Time changed to warm evening golden hour: low orange sun from the left windows casting long soft light stripes across the oak floor and the sofa, the brass floor lamp and the two pendant lamps above the kitchen island are switched on with a warm glow, a candle lit on the coffee table, cosy evening mood, slightly deeper shadows in the corners. Photorealistic, no people, no text.
 
-| Файл | Промпт |
-|---|---|
-| `1-final.png` | A finished modern living room with an open kitchen in a 74 m² city apartment: warm milky microcement walls, light oak herringbone floor, a low sand-colored linen sofa in the center, a travertine coffee table, a brass floor lamp, a large wool rug, an oak kitchen island with three stools on the right, linen curtains, a big plant by the window, warm golden late-afternoon light. Calm, expensive, minimal Scandinavian-Japanese style. Empty wall area in the upper-left third for text |
-| `0-empty.png` | **Редактирование `1-final.png`:** remove all furniture, rug, lamp, plant, curtains and kitchen; bare grey concrete walls and ceiling with formwork marks, raw concrete screed floor, exposed wiring hanging from the ceiling, a few construction dust marks, cold neutral overcast daylight; keep the exact same camera, room geometry, windows and perspective |
+**Шаг 2, наезд:** кадрировать результат по центру до 88% ширины и высоты (центр кадра смещён чуть вниз, на диван: `y` центра = 54%) и масштабировать обратно до 1920×1080. Так в видео получится медленный наезд камеры.
 
-## Ролик (`video/1-empty-to-final.mp4`)
+## Ролик (`video/1-final-to-evening.mp4`)
 
-Старт `0-empty` → финиш `1-final`, 5 с, камера неподвижна.
+Старт `1-final` → финиш `2-evening`, 5 с.
 
 Промпт движения:
-> Time-lapse renovation of the same room, static camera. First the concrete walls get smooth warm plaster, then oak herringbone floor spreads across the screed from the windows towards the camera, then the kitchen island and sofa materialize and slide into place, then the rug, lamp, coffee table and plant appear, curtains unfold; daylight gradually shifts from cold overcast to warm golden afternoon. Smooth continuous transformation, no cuts, no camera movement, no people.
+> Slow cinematic dolly-in towards the sofa. Daylight gradually turns into warm golden evening light, sun stripes slide across the floor, the floor lamp and the pendant lamps above the island softly switch on one after another, linen curtains sway gently in a light breeze, plant leaves move slightly, a candle flame flickers. Smooth continuous motion, no cuts, no people.
 
-Негатив: `camera shake, zoom, pan, people, workers, text, flicker, morphing walls, distorted windows`
+Негатив: `camera shake, fast zoom, pan, people, text, flicker of the whole frame, morphing furniture, distorted windows, furniture appearing or disappearing`
 
-Последний кадр ролика должен совпадать с `1-final.png`: Codex ставит PNG чётким постером в конечной точке ползунка.
+Последний кадр ролика должен совпадать с `2-evening.png`: на сайте он стоит чётким постером, и по нему Codex ставит метки с ценами.
