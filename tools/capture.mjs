@@ -5,7 +5,7 @@ const ws=new WebSocket(page.webSocketDebuggerUrl);await new Promise((ok,no)=>{ws
 let id=0;const pending=new Map();ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id&&pending.has(m.id)){const [ok,no]=pending.get(m.id);pending.delete(m.id);m.error?no(Error(m.error.message)):ok(m.result)}};
 const call=(method,params={})=>new Promise((ok,no)=>{const n=++id;pending.set(n,[ok,no]);ws.send(JSON.stringify({id:n,method,params}))});
 await call('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});const base=pathToFileURL(resolve(fileURLToPath(new URL('..',import.meta.url)),'index.html')).href;
-for(const [name,url,wait] of [['start-hint',base,1600],['brush-mid',base+'?p=0.2',900],['wave',base+'?p=0.38',900],['climax-mid',base+'?cine=0.5',900],['final-labels',base+'?p=1',2200]]){
+for(const [name,url,wait] of [['t-000',base+'?t=0',2600],['t-030',base+'?t=0.3',2600],['t-060',base+'?t=0.6',2600],['t-085',base+'?t=0.85',2600],['final-labels',base+'?t=1',3800]]){
   await call('Page.navigate',{url});await new Promise(r=>setTimeout(r,wait));const shot=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(new URL(`../shots/${name}.png`,import.meta.url),Buffer.from(shot.data,'base64'));
 }
 ws.close();
