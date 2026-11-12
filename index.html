@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ОБЪЁМ — интерьер за 96 дней</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="loader"><span></span></div>
+  <main id="app">
+    <canvas id="scene"></canvas><div class="shade"></div><div id="sweep"></div>
+    <header class="glass topbar intro">
+      <a class="brand" href="#" aria-label="ОБЪЁМ"><span class="mark"></span><b>ОБЪЁМ</b></a>
+      <nav><a>Проекты</a><a>Услуги</a><a>Как работаем</a><a>Цены</a></nav>
+      <div class="contacts"><span>+7 (900) 000-00-00</span><button>Обсудить проект</button></div>
+    </header>
+    <section class="hero intro">
+      <div class="eyebrow">Квартира 74 м² · ЖК на набережной</div>
+      <h1><span>От голого бетона</span><span>до ключей — за 96 дней</span></h1>
+      <p>Потяните ползунок и посмотрите,<br>как меняется квартира</p>
+    </section>
+    <aside class="rail intro">
+      <article class="glass stage-card"><small>СЕЙЧАС</small><div class="stage-clip"><h2 id="stageTitle">01 · Черновая</h2></div><p id="stageText">Стяжка, электрика, выравнивание стен</p><div id="segments"><i></i><i></i><i></i><i></i></div></article>
+      <article class="glass stats"><div><small>День</small><strong id="days">0</strong></div><div><small>Бюджет</small><strong id="budget">0 ₽</strong></div><div class="ready"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"></circle><circle id="ring" cx="24" cy="24" r="20"></circle></svg><span><small>Готовность</small><strong id="ready">0%</strong></span></div></article>
+    </aside>
+    <div id="divider" class="intro"><div id="stagePill" class="glass">01 · Черновая</div><button id="handle" aria-label="Ползунок сравнения"><span>‹</span><span>›</span></button><div class="side-label before">Было</div><div class="side-label after">Стало</div></div>
+    <section class="glass materials intro" aria-label="Материалы">
+      <div class="material" data-at=".25"><i style="--img:url('assets/img/mat-plaster.webp')"></i><span>Микроцемент</span></div>
+      <div class="material" data-at=".35"><i style="--img:url('assets/img/mat-oak.webp')"></i><span>Дуб</span></div>
+      <div class="material" data-at=".55"><i style="--img:url('assets/img/mat-linen.webp')"></i><span>Лён</span></div>
+      <div class="material" data-at=".65"><i style="--img:url('assets/img/mat-travertine.webp')"></i><span>Травертин</span></div>
+      <div class="material" data-at=".80"><i style="--img:url('assets/img/mat-brass.webp')"></i><span>Латунь</span></div>
+    </section>
+    <div id="hotspots">
+      <div class="hotspot" style="--x:38%;--y:66%;--delay:0s"><i></i><span>Диван, лён<br><b>240 000 ₽</b></span></div>
+      <div class="hotspot" style="--x:78%;--y:59%;--delay:.1s"><i></i><span>Остров, дуб<br><b>410 000 ₽</b></span></div>
+      <div class="hotspot" style="--x:33%;--y:48%;--delay:.2s"><i></i><span>Торшер, латунь<br><b>38 000 ₽</b></span></div>
+      <div class="hotspot" style="--x:51%;--y:73%;--delay:.3s"><i></i><span>Столик, травертин<br><b>72 000 ₽</b></span></div>
+    </div>
+    <div class="final-cta intro"><span>Смета за 1 день, бесплатно</span><button>Рассчитать мой интерьер <b>→</b></button></div>
+    <div id="demoFinger"><i></i></div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="script.js"></script>
+</body>
+</html>
